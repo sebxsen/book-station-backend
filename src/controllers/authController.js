@@ -4,6 +4,7 @@ import * as Users from "../models/usersModel";
 
 const JWT_SECRET = process.env.JWT_SECRET || "shhhh-its-a-secret";
 
+// funtion to register a new user
 export const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
@@ -25,6 +26,7 @@ export const register = async (req, res) => {
   }
 };
 
+// function to login a user
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;

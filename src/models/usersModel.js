@@ -24,5 +24,3 @@ export const getAllUsers = async () => {
     const {rows} = await pool.query(query);
     return rows;
 };
-
-
