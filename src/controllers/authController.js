@@ -1,21 +1,19 @@
 import jwt from "jsonwebtoken";
-import bycrypt from "bcryptjs";
-import * as Users from "../models/usersModel";
+import bcrypt from "bcryptjs";
+import * as Users from "../models/userModel.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "shhhh-its-a-secret";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     //Verify if user already exists
     const existing = await Users.findUserByEmail(email);
     if (existing)
       return res.status(400).json({ error: "Es correo ya esta registrado" });
 
-    //Hash password and create user
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await Users.createUser({ name, email, password, role });
+    const newUser = await Users.createUser( name, email, password, "Administrador");
 
     res.status(201).json(newUser);
   } catch (err) {
