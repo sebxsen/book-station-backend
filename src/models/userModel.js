@@ -1,4 +1,4 @@
-import pool from "../db/index.js";
+import pool from "../db.js";
 import bcrypt from "bcryptjs";
 
 //Create a new user
@@ -18,9 +18,23 @@ export const findUserByEmail = async (email) => {
   return rows[0];
 };
 
-// List all users
+//List all users
 export const getAllUsers = async () => {
     const query = `SELECT id, name, email, role, created_at FROM users ORDER BY id DESC;`;
     const {rows} = await pool.query(query);
     return rows;
 };
+
+//Update user
+export const updateUser = async (id, name, email, role) => {
+  const query = `UPDATE users SET name=$1, email=$2, role=$3 WHERE id=$4 RETURNING id, name, email, role, created_at;`;
+  const { rows } = await pool.query(query, [name, email, role, id]);
+  return rows[0];
+}
+
+//Delete user
+export const deleteUser = async (id) => {
+  const query = `DELETE FROM users WHERE id=$1 RETURNING id;`;
+  const { rows } = await pool.query(query, [id]);
+  return rows[0];
+}
