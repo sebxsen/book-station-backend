@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import pool from "./db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import nationalityRoutes from "./routes/nationalityRoutes.js";
+import authorRoutes from "./routes/authorRoutes.js";
 
 dotenv.config();
 
@@ -18,6 +20,8 @@ app.use(express.json());
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/nationalities", nationalityRoutes);
+app.use("/api/authors", authorRoutes);
 
 // Test DB connection
 pool.query("SELECT NOW()")
