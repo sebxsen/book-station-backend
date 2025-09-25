@@ -11,7 +11,7 @@ export const createAuthor = async (req, res) => {
     }
 };
 
-// Get all authors
+// Get all authors with nationality name
 export const getAllAuthors = async (req, res) => {
     try {
         const authors = await Authors.getAllAuthors();
