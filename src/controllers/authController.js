@@ -4,13 +4,13 @@ import * as Users from "../models/userModel.js";
 
 const JWT_SECRET = process.env.JWT_SECRET || "shhhh-its-a-secret";
 
-// funtion to register a new user
+// Funtion to register a new user
 export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    //Verify if user already exists
-    const existing = await Users.findUserByEmail(email);
+    // Verify if user already exists
+    const existing = await Users.getUserByEmail(email);
     if (existing)
       return res.status(400).json({ error: "Es correo ya esta registrado" });
 
@@ -24,25 +24,25 @@ export const register = async (req, res) => {
   }
 };
 
-// function to login a user
+// Function to login a user
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await Users.findUserByEmail(email);
+    const user = await Users.getUserByEmail(email);
     if (!user) return res.status(400).json({ error: "Usuario no encontrado" });
 
-    //Compare passwords
+    // Compare passwords
     const valid = await bcrypt.compare(password, user.password);
     if (!valid) return res.status(400).json({ error: "Contraseña incorrecta" });
 
-    //Create JWT
+    // Create JWT
     const token = jwt.sign(
-      { id: user.id, role: user.role }, //Role come from enum in the database
+      { id: user.id, role: user.role }, // Role come from enum in the database
       JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    //Return token and user info
+    // Return token and user info
     res.json({
       token,
       user: {
