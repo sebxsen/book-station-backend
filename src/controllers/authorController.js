@@ -3,8 +3,8 @@ import * as Authors from "../models/authorModel.js";
 // Create author
 export const createAuthor = async (req, res) => {
     try {
-        const { name, lastname, nacionality_id } = req.body;
-        const author = await Authors.createAuthor(name, lastname, nacionality_id);
+        const { name, lastname, nationality_id } = req.body;
+        const author = await Authors.createAuthor(name, lastname, nationality_id);
         res.status(201).json(author);
     } catch (err) {
         res.status(500).json({ error: "Error al crear autor", details: err.message });
@@ -41,8 +41,8 @@ export const getAuthorById = async (req, res) => {
 export const updateAuthor = async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, lastname, nacionality_id } = req.body;
-        const author = await Authors.updateAuthor(id, name, lastname, nacionality_id);
+        const { name, lastname, nationality_id } = req.body;
+        const author = await Authors.updateAuthor(id, name, lastname, nationality_id);
 
         if (!author) {
             return res.status(404).json({ error: "Autor no encontrado" });
