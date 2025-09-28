@@ -23,6 +23,7 @@ app.use("/api/users", userRoutes);
 app.use("/api/nationalities", nationalityRoutes);
 app.use("/api/authors", authorRoutes);
 
+
 // Test DB connection
 pool.query("SELECT NOW()")
   .then(res => console.log("Conectado a la BD:", res.rows[0]))
