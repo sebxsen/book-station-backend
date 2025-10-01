@@ -9,6 +9,8 @@ import nationalityRoutes from "./routes/nationalityRoutes.js";
 import authorRoutes from "./routes/authorRoutes.js";
 import booksRoutes from "./routes/booksRoutes.js";
 import copieRoutes from "./routes/copiesRoutes.js";
+import reservationRoutes from "./routes/reservationRoutes.js";
+import notificationsRoutes from "./routes/notificationsRoutes.js";
 
 
 dotenv.config();
@@ -27,6 +29,8 @@ app.use("/api/nationalities", nationalityRoutes);
 app.use("/api/authors", authorRoutes);
 app.use("/api/books", booksRoutes);
 app.use("/api/copies", copieRoutes);
+app.use("/api/reservations", reservationRoutes);
+app.use("/api/notifications", notificationsRoutes);
 
 
 // Test DB connection
