@@ -7,6 +7,8 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import nationalityRoutes from "./routes/nationalityRoutes.js";
 import authorRoutes from "./routes/authorRoutes.js";
+import booksRoutes from "./routes/booksRoutes.js";
+import copieRoutes from "./routes/copiesRoutes.js";
 
 
 dotenv.config();
@@ -23,6 +25,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/nationalities", nationalityRoutes);
 app.use("/api/authors", authorRoutes);
+app.use("/api/books", booksRoutes);
+app.use("/api/copies", copieRoutes);
 
 
 // Test DB connection
