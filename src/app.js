@@ -11,6 +11,7 @@ import booksRoutes from "./routes/booksRoutes.js";
 import copieRoutes from "./routes/copiesRoutes.js";
 import reservationRoutes from "./routes/reservationRoutes.js";
 import notificationsRoutes from "./routes/notificationsRoutes.js";
+import loansRoutes from "./routes/loansRoutes.js";
 
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/api/books", booksRoutes);
 app.use("/api/copies", copieRoutes);
 app.use("/api/reservations", reservationRoutes);
 app.use("/api/notifications", notificationsRoutes);
+app.use("/api/loans", loansRoutes);
 
 
 // Test DB connection
