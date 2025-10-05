@@ -14,7 +14,7 @@ export const register = async (req, res) => {
     if (existing)
       return res.status(400).json({ error: "Es correo ya esta registrado" });
 
-    const newUser = await Users.createUser( name, email, password, "Administrador");
+    const newUser = await Users.createUser( name, email, password, "Usuario");
 
     res.status(201).json(newUser);
   } catch (err) {
