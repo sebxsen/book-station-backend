@@ -76,8 +76,15 @@ export const getBookById = async (id) => {
 // Get all books with category and author
 export const getAllBooks = async () => {
   const query = `
-        SELECT b.id, b.title, b.description, b.publication_date, b.editorial,
-               c.name AS category, a.name AS author_name, a.lastname AS author_lastname
+        SELECT b.id,
+               b.title,
+               b.description,
+               b.publication_date,
+               b.editorial,
+               b.img_url,               -- <-- imagen
+               c.name AS category,
+               a.name AS author_name,
+               a.lastname AS author_lastname
         FROM books b
         JOIN categories c ON b.category_id = c.id
         JOIN authors a ON b.author_id = a.id
