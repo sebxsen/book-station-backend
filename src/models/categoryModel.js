@@ -11,6 +11,26 @@ export const createCategory = async (name) => {
     return rows[0];
 };
 
+// Create multiple categories
+export const createMultipleCategories = async (categories) => {
+    const values = [];
+    const params = [];
+
+    categories.forEach((category, index) => {
+        values.push(`($${index + 1})`);
+        params.push(category.name);
+    });
+
+    const query = `
+        INSERT INTO categories (name)
+        VALUES ${values.join(", ")}
+        RETURNING id, name;
+    `;
+
+    const { rows } = await pool.query(query, params);
+    return rows;
+};
+
 //Get all categories
 export const getAllCategories = async () => {
     const query =

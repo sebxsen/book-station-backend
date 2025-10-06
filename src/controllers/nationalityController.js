@@ -1,15 +1,40 @@
 import * as Nationalities from "../models/nationalityModel.js";
 
 // Create a new nationality
-export const createNationality = async (req, res) => {
-    try {
-        const {name} = req.body;
-        const newNationality = await Nationalities.createNationality(name);
-        res.status(201).json(newNationality);
-    } catch (err) {
-        res.status(500).json({err: "Error al crear la nacionalidad", deatils : err.message});
+export const createMultipleNationalities = async (req, res) => {
+  try {
+    const data = req.body;
+
+    // Si envían un array
+    if (Array.isArray(data)) {
+      if (data.length === 0) {
+        return res.status(400).json({ error: "El array no puede estar vacío" });
+      }
+
+      const nationalities = await Nationalities.createMultipleNationalities(data);
+      return res.status(201).json({
+        message: "Nacionalidades creadas exitosamente",
+        nationalities,
+      });
+    } 
+    // Si envían un solo objeto
+    else {
+      const { name } = data;
+      if (!name || name.trim() === "") {
+        return res.status(400).json({ error: "El campo 'name' es obligatorio" });
+      }
+
+      const nationality = await Nationalities.createNationality(name);
+      return res.status(201).json({
+        message: "Nacionalidad creada exitosamente",
+        nationality,
+      });
     }
-}
+  } catch (error) {
+    console.error("Error creando nacionalidad(es):", error);
+    res.status(500).json({ error: "Error al crear nacionalidad(es)" });
+  }
+};
 
 // Get all nationalities
 export const getAllNationalities = async (req, res) => {

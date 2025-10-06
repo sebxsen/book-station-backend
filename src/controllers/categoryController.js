@@ -1,14 +1,36 @@
 import * as Categories from '../models/categoryModel.js';
 
 // Create a new category
-export const createCategory = async (req, res) => {
-    try {
-        const {name} = req.body;
-        const newCategory = await Categories.createCategory(name);
-        res.status(201).json(newCategory);
-    } catch (err) {
-        res.status(500).json({err: "Error al crear la categoría", details : err.message});
+export const createMultipleCategories = async (req, res) => {
+  try {
+    const data = req.body;
+
+    if (Array.isArray(data)) {
+      if (data.length === 0) {
+        return res.status(400).json({ error: "El array no puede estar vacío" });
+      }
+
+      const categories = await Categories.createMultipleCategories(data);
+      return res.status(201).json({
+        message: "Categorías creadas exitosamente",
+        categories,
+      });
+    } else {
+      const { name } = data;
+      if (!name || name.trim() === "") {
+        return res.status(400).json({ error: "El campo 'name' es obligatorio" });
+      }
+
+      const category = await Categories.createCategory(name);
+      return res.status(201).json({
+        message: "Categoría creada exitosamente",
+        category,
+      });
     }
+  } catch (error) {
+    console.error("Error creando categoría(s):", error);
+    res.status(500).json({ error: "Error al crear categoría(s)" });
+  }
 };
 
 // Get all categories

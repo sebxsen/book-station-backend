@@ -12,6 +12,27 @@ export const createAuthor = async (name, lastname, nationality_id) => {
     return rows[0];
 }
 
+// Create multiple authors
+export const createMultipleAuthors = async (authors) => {
+    const values = [];
+    const params = [];
+
+    authors.forEach((author, index) => {
+        const i = index * 3;
+        values.push(`($${i + 1}, $${i + 2}, $${i + 3})`);
+        params.push(author.name, author.lastname, author.nationality_id);
+    });
+
+    const query = `
+        INSERT INTO authors (name, lastname, nationality_id)
+        VALUES ${values.join(", ")}
+        RETURNING id, name, lastname, nationality_id;
+    `;
+
+    const { rows } = await pool.query(query, params);
+    return rows;
+};
+
 // Get author by ID
 export const getAuthorById = async (id) => {
     const query = 

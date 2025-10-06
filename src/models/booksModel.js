@@ -30,6 +30,35 @@ export const createBook = async (
   return rows[0];
 };
 
+// Create multiple books
+export const createMultipleBooks = async (books) => {
+  const values = [];
+  const params = [];
+
+  books.forEach((book, index) => {
+    const i = index * 7;
+    values.push(`($${i + 1}, $${i + 2}, $${i + 3}, $${i + 4}, $${i + 5}, $${i + 6}, $${i + 7})`);
+    params.push(
+      book.author_id,
+      book.category_id,
+      book.title,
+      book.description,
+      book.publication_date,
+      book.editorial,
+      book.img_url
+    );
+  });
+
+  const query = `
+    INSERT INTO books (author_id, category_id, title, description, publication_date, editorial, img_url)
+    VALUES ${values.join(", ")}
+    RETURNING id, author_id, category_id, title, description, publication_date, editorial, img_url;
+  `;
+
+  const { rows } = await pool.query(query, params);
+  return rows;
+};
+
 // Get book by id with category and author
 export const getBookById = async (id) => {
   const query = `
